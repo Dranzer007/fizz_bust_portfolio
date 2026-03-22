@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fizz Bust — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #F28F16;
+    --gold-light: #F2C12E;
+    --gold-dark: #BA6F0A;
+    --teal: #72E9DC;
+    --ink: #0D0D0D;
+    --slate: #1E1E2E;
+    --body: #3D3D4E;
+    --muted: #7A7A8E;
+    --surface: #F8F7F2;
+    --card: #FFFFFF;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface);
+    color: var(--body);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #F2C12E 0%, #F28F16 45%, #F29C05 70%, #5ED8CC 100%);
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    top: -100px; right: -80px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    bottom: -60px; right: 120px;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.28);
+    color: #3D1800;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(40px, 7vw, 72px);
+    font-weight: 800;
+    color: #1A0A00;
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: #3D1800;
+    max-width: 520px;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    background: rgba(255,255,255,0.3);
+    color: #2C1000;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── STATS ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 2.5rem; }
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+  .card + .card { margin-top: 10px; }
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .card-body { font-size: 14px; color: var(--body); line-height: 1.65; }
+
+  /* ── AI STORY ── */
+  .ai-card {
+    border-left: 3px solid var(--gold);
+    background: var(--card);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+    border-top: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.5s ease both;
+  }
+  .ai-card:nth-child(2) { animation-delay: 0.1s; }
+  .ai-card:nth-child(3) { animation-delay: 0.2s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .ai-card-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+  .ai-card-body { font-size: 13px; color: var(--body); line-height: 1.65; }
+
+  /* ── CORE LOOP ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0.5rem 0;
+  }
+  .flow-step {
+    background: #FFF8EE;
+    border: 1px solid #F2C12E;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    margin: 4px 0;
+  }
+  .flow-arrow { color: var(--gold); font-size: 18px; padding: 0 8px; font-weight: 700; }
+
+  /* ── BOTTLES ── */
+  .bottle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: 8px;
+  }
+  .bottle-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .bottle-item:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+  .bottle-emoji { font-size: 24px; display: block; margin-bottom: 6px; }
+  .bottle-name { font-size: 11px; font-weight: 500; color: var(--ink); display: block; }
+  .bottle-effect { font-size: 10px; color: var(--gold-dark); display: block; margin-top: 2px; }
+
+  /* ── DIFFICULTY TABLE ── */
+  .diff-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .diff-table th {
+    background: #FFF8EE;
+    padding: 10px 12px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .diff-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--body);
+    vertical-align: middle;
+  }
+  .diff-table tr:last-child td { border-bottom: none; }
+
+  /* ── PILLS ── */
+  .pill {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin: 3px;
+  }
+  .pill-easy { background: #E1F5EE; color: #04342C; }
+  .pill-med  { background: #FAEEDA; color: #633806; }
+  .pill-hard { background: #FAECE7; color: #4A1B0C; }
+
+  /* ── TECH TAGS ── */
+  .tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .tech-tag {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ── FEATURES GRID ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .feat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: transform 0.15s;
+  }
+  .feat-card:hover { transform: translateY(-2px); }
+  .feat-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .feat-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+  .feat-body { font-size: 13px; color: var(--body); line-height: 1.6; }
+
+  /* ── SKILLS TAGS ── */
+  .skills-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    background: #FFF8EE;
+    border: 1px solid #F2C12E;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3D1800;
+  }
+
+  /* ── CREATOR BIO ── */
+  .creator {
+    background: linear-gradient(135deg, #1A0A00 0%, #2C1500 100%);
+    border-radius: 14px;
+    padding: 2rem;
+    color: #fff;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .creator-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: #1A0A00;
+    flex-shrink: 0;
+  }
+  .creator-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .creator-title { font-size: 13px; color: var(--gold); margin-bottom: 8px; font-weight: 500; }
+  .creator-bio { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; max-width: 480px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Hyper Casual · Mobile · Android + Web</div>
+    <h1>Fizz Bust 🍾</h1>
+    <p class="hero-sub">A fast-paced arcade bottle-popping game — designed, built, and shipped solo using Google AI Studio. From original GDD to production codebase v1.0.7 on Google Play.</p>
+    <div class="hero-badges">
+      <span class="badge">Sole Creator</span>
+      <span class="badge">Original GDD → v1.0.7</span>
+      <span class="badge">Google AI Studio</span>
+      <span class="badge">React + TypeScript</span>
+      <span class="badge">Android (Capacitor)</span>
+      <span class="badge">Google AdMob</span>
+      <span class="badge">Google Play Store</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- STATS -->
+  <div class="stats-grid" style="margin-top: -1rem;">
+    <div class="stat-card"><div class="stat-num">v1.0.7</div><div class="stat-label">Shipped version</div></div>
+    <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Bottle types</div></div>
+    <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Difficulty levels</div></div>
+    <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Platforms</div></div>
+  </div>
+
+  <!-- AI STORY -->
+  <div class="section">
+    <div class="sec-title">The AI creation story</div>
+    <div class="ai-card">
+      <div class="ai-card-title">From concept to GDD</div>
+      <div class="ai-card-body">Authored a full Game Design Document (V1.0) using Google AI Studio — defining game mechanics, level systems, art style, colour palette, animation specs, and a complete video ad storyboard. Zero code, full product vision.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-title">From GDD to shipped codebase</div>
+      <div class="ai-card-body">Evolved the GDD into a live production codebase (v1.0.7) — React + TypeScript + Vite frontend, Konva canvas rendering, local leaderboard, Google AdMob monetisation, and a Capacitor Android build pipeline. Submitted to Google Play Store. All designed through AI-powered workflow.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-title">QA instincts applied to game design</div>
+      <div class="ai-card-body">7 years of production QA shaped every design decision — spawn fairness logic (inner 80% constraint), accessibility minimums (36px tap targets), edge-case handling (overlap checks, lane spacing), and a built-in debug suite with god mode, cheat codes, and live design mode.</div>
+    </div>
+  </div>
+
+  <!-- CORE LOOP -->
+  <div class="section">
+    <div class="sec-title">Core game loop</div>
+    <div class="card">
+      <div class="flow">
+        <div class="flow-step">Bottles spawn</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Player taps</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Combo builds</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Power bottles trigger</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Miss = lose life</div><div class="flow-arrow">→</div>
+        <div class="flow-step">0 lives = game over</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTLE TYPES -->
+  <div class="section">
+    <div class="sec-title">Bottle types designed</div>
+    <div class="bottle-grid">
+      <div class="bottle-item"><span class="bottle-emoji">🍋</span><span class="bottle-name">Lemon</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🍊</span><span class="bottle-name">Orange</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🍒</span><span class="bottle-name">Cherry</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🍇</span><span class="bottle-name">Grape</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🫐</span><span class="bottle-name">Blue Razz</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🍓</span><span class="bottle-name">Strawberry</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🥤</span><span class="bottle-name">Cola</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">⭐</span><span class="bottle-name">Golden</span><span class="bottle-effect">+1 life</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🌴</span><span class="bottle-name">Tropical</span><span class="bottle-effect">AoE blast</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">❄️</span><span class="bottle-name">Frosty</span><span class="bottle-effect">slow field</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">⚡</span><span class="bottle-name">Thunder</span><span class="bottle-effect">chain pop</span></div>
+      <div class="bottle-item"><span class="bottle-emoji">🧩</span><span class="bottle-name">Puzzle</span><span class="bottle-effect">in code</span></div>
+    </div>
+  </div>
+
+  <!-- DIFFICULTY -->
+  <div class="section">
+    <div class="sec-title">Difficulty system</div>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <table class="diff-table">
+        <tr>
+          <th>Level</th><th>Speed</th><th>Spawn rate</th><th>Bottle limit</th><th>Movement</th>
+        </tr>
+        <tr>
+          <td><span class="pill pill-easy">Easy</span></td>
+          <td>1.6×</td><td>1550ms</td><td>7</td><td>Right-to-left only</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-med">Medium</span></td>
+          <td>2.6×</td><td>1250ms</td><td>10</td><td>L ↔ R bidirectional</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-hard">Hard</span></td>
+          <td>3.2×</td><td>1100ms</td><td>12</td><td>L/R + Throw + Falling</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="sec-title">Technical stack</div>
+    <div class="card">
+      <div class="card-body">Built entirely through AI-powered development — no traditional coding background required.</div>
+      <div class="tech-row">
+        <span class="tech-tag">React + TypeScript</span>
+        <span class="tech-tag">Vite</span>
+        <span class="tech-tag">Konva canvas</span>
+        <span class="tech-tag">Motion (animation)</span>
+        <span class="tech-tag">canvas-confetti</span>
+        <span class="tech-tag">Capacitor (Android)</span>
+        <span class="tech-tag">Google AdMob</span>
+        <span class="tech-tag">Local Leaderboard</span>
+        <span class="tech-tag">Google AI Studio</span>
+        <span class="tech-tag">Time-based Physics</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section">
+    <div class="sec-title">Features shipped</div>
+    <div class="features-grid">
+      <div class="feat-card"><span class="feat-icon">🏆</span><div class="feat-title">Local leaderboard</div><div class="feat-body">Top 10 per difficulty stored locally. Personal best tracking. Best combo display. No login required — works fully offline.</div></div>
+      <div class="feat-card"><span class="feat-icon">🎯</span><div class="feat-title">Time-based physics</div><div class="feat-body">Frame-rate independent movement — consistent speed across all devices. Gravity 0.22, friction 0.985, max velocity 15.</div></div>
+      <div class="feat-card"><span class="feat-icon">✨</span><div class="feat-title">Juicy VFX</div><div class="feat-body">Tropical AoE blast with orange rings + particles. Thunder lightning bolts. Frosty freeze overlay. Confetti on combos.</div></div>
+      <div class="feat-card"><span class="feat-icon">💰</span><div class="feat-title">Real AdMob ads</div><div class="feat-body">Google AdMob SDK integrated. Interstitial every 3 games. Rewarded ad revive once per session. Live earning from day 1.</div></div>
+      <div class="feat-card"><span class="feat-icon">🛠️</span><div class="feat-title">Debug suite</div><div class="feat-body">God mode, score injection, bottle spawner, design mode with drag/scale/rotate — gated behind backtick key.</div></div>
+      <div class="feat-card"><span class="feat-icon">📖</span><div class="feat-title">Onboarding</div><div class="feat-body">4-step interactive tutorial overlay. Perfect pop demonstration. Shown once per device.</div></div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section">
+    <div class="sec-title">What this demonstrates</div>
+    <div class="card">
+      <div class="skills-row">
+        <span class="skill-tag">Original game design</span>
+        <span class="skill-tag">AI workflow end-to-end</span>
+        <span class="skill-tag">Product thinking</span>
+        <span class="skill-tag">QA instincts in design</span>
+        <span class="skill-tag">Prompt engineering</span>
+        <span class="skill-tag">Production deployment</span>
+        <span class="skill-tag">No-code to codebase</span>
+        <span class="skill-tag">Accessibility design</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATOR -->
+  <div class="section">
+    <div class="sec-title">Creator</div>
+    <div class="creator">
+      <div class="creator-avatar">SA</div>
+      <div>
+        <div class="creator-name">Sujay Avula</div>
+        <div class="creator-title">AI Production Quality Specialist · Workflow Designer</div>
+        <div class="creator-bio">7+ years QA at Epic Games (Fortnite) and Electronic Arts (The Sims 4). Now building at the intersection of production quality and AI — designing workflows, testing AI systems, and shipping original products using no-code AI toolchains.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Fizz Bust — GDD V1.0 → Codebase V1.0.7 · Google Play Store · Built with Google AI Studio · Sujay Avula · sujaysunnyavula@gmail.com · <a href="/cdn-cgi/l/email-protection" class="__cf_
